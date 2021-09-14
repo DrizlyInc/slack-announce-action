@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"os"
 
 	"github.com/sethvargo/go-githubactions"
@@ -11,6 +12,12 @@ type ActionInputs struct {
 	channel string
 	username string
 	status string
+	steps []Step
+}
+
+type Step struct {
+	Title string `json:"title"`
+	Status string `json:"status"`
 }
 
 func ParseInputs() *ActionInputs {
@@ -18,13 +25,30 @@ func ParseInputs() *ActionInputs {
 	status := EnvOrFatal("INPUT_STATUS", "Input 'status' is required")
 	channel := EnvOrDefault("INPUT_CHANNEL", "webhook-playground")
 	username := EnvOrDefault("INPUT_USERNAME", "GitHub Actions")
+	steps := ParseStepsInput()
 
 	return &ActionInputs{
 		webhookUrl: webhookUrl,
 		status: status,
 		channel: channel,
 		username: username,
+		steps: steps,
 	}
+}
+
+func ParseStepsInput() []Step {
+	stepsJson := EnvOrDefault("INPUT_STEPS", "[]")
+	var steps []Step
+	err := json.Unmarshal([]byte(stepsJson), &steps)
+	if err != nil {
+		githubactions.Fatalf("Error parsing input 'steps': %v", err.Error())
+	}
+	for _, step := range steps {
+		if step.Status == "" || step.Title == "" {
+			githubactions.Fatalf("Missing property in provided step")
+		}
+	}
+	return steps
 }
 
 func EnvOrDefault(name, def string) string {

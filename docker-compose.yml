@@ -19,3 +19,9 @@ services:
       INPUT_STATUS: success
       INPUT_CHANNEL:
       INPUT_USERNAME: Testing
+      INPUT_STEPS: |
+        [
+          { "title": "`terraform-plan` on dev-general", "status": "success" },
+          { "title": "`terraform-apply` on dev-general", "status": "success" },
+          { "title": "`terraform-plan` on old-prod", "status": "failure" }
+        ]

@@ -23,34 +23,34 @@ func main() {
 		Attachments: []slack.Attachment{{
 			Fallback: title,
 			Color: color,
-			Blocks: slack.Blocks{ // https://app.slack.com/block-kit-builder
-				BlockSet: []slack.Block{
-					NewTitleBlock(*env),
-					NewActorContextBlock(*env),
-					NewRefContextBlock(*env),
-					NewCommitContextBlock(*env),
-					slack.NewDividerBlock(),
-					slack.NewSectionBlock(
-						&slack.TextBlockObject{
-							Type: slack.MarkdownType,
-							Text: ":white_check_mark: `terraform apply` on dev-general",
-						},
-						nil,
-						nil,
-					),
-				},
+			Blocks: slack.Blocks{
+				BlockSet: GetMessageBlocks(*env, *inputs),
 			},
 		}},
 	}
 
 	b, err := json.Marshal(webhookMsg);
-	githubactions.Infof(string(b))
+	githubactions.Infof(fmt.Sprintf("%s\n", string(b)))
 
 	err = slack.PostWebhook(inputs.webhookUrl, webhookMsg)
 	if err != nil {
 		githubactions.Fatalf("Error posting to slack webhook: %v", err.Error())
 	}
 
+}
+
+// https://app.slack.com/block-kit-builder
+func GetMessageBlocks(env Environment, inputs ActionInputs) []slack.Block {
+	blocks := []slack.Block{
+		NewTitleBlock(env),
+		NewActorContextBlock(env),
+		NewRefContextBlock(env),
+		NewCommitContextBlock(env),
+	}
+	if len(inputs.steps) > 0 {
+		blocks = append(blocks, slack.NewDividerBlock(), NewStepsSectionBlock(inputs))
+	}
+	return blocks
 }
 
 // Returns a color for the message attachment and an
@@ -66,5 +66,20 @@ func GetColorAndTitleSuffix(status string) (string, string) {
 	default:
 		githubactions.Fatalf("Provided status %s is invalid", status)
 		return "", ""
+	}
+}
+
+// Returns an emoji which represents a given status
+func GetStatusEmoji(status string) string {
+	switch status {
+	case "success":
+		return ":white_check_mark:"
+	case "failure":
+		return ":x:"
+	case "cancelled":
+		return ":heavy_minus_sign:"
+	default:
+		githubactions.Fatalf("Provided status %s is invalid", status)
+		return ""
 	}
 }
