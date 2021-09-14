@@ -17,7 +17,7 @@ services:
 
       INPUT_WEBHOOK_URL: https://hooks.slack.com/services/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
       INPUT_STATUS: success
-      INPUT_CHANNEL:
+      INPUT_CHANNEL: webhook-playground
       INPUT_USERNAME: Testing
       INPUT_STEPS: |
         [

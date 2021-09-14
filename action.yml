@@ -18,9 +18,8 @@ inputs:
     default: "[]"
 
   channel:
-    required: false
+    required: true
     description: Slack channel to send the announcement to
-    default: webhook-playground
 
   username:
     required: false
