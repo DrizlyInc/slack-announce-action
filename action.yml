@@ -1,0 +1,23 @@
+name: Slack Announce
+description: Announces the status of a GitHub actions workflow
+author: DrizlyInc/DVX
+
+inputs:
+
+  webhook_url:
+    required: true
+    description: Slack webhook url to use for sending the notification
+
+  channel:
+    required: false
+    description: Slack channel to send the announcement to
+    default: webhook-playground
+
+  username:
+    required: false
+    description: Username to display as the sender of the notification
+    default: GitHub Actions
+
+runs:
+  using: docker
+  image: Dockerfile

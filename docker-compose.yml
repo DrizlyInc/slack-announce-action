@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  action:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      GITHUB_RUN_NUMBER: 123
+      GITHUB_REPOSITORY: DrizlyInc/slack-announce-action
+      GITHUB_SERVER_URL: https://github.com
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+      GITHUB_ACTOR: benreynolds-drizly
+      GITHUB_SHA: 28e8b353eabda5998a2e1203aed33c5999944779
+
+      INPUT_WEBHOOK_URL: https://hooks.slack.com/services/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
+      INPUT_CHANNEL:
