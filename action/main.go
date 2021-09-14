@@ -47,8 +47,8 @@ func GetMessageBlocks(env Environment, inputs ActionInputs, titleSuffix string) 
 		NewRefContextBlock(env),
 		NewCommitContextBlock(env),
 	}
-	if len(inputs.steps) > 0 {
-		blocks = append(blocks, slack.NewDividerBlock(), NewStepsSectionBlock(inputs))
+	if len(inputs.indicators) > 0 {
+		blocks = append(blocks, slack.NewDividerBlock(), NewIndicatorsSectionBlock(inputs))
 	}
 	return blocks
 }

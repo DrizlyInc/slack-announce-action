@@ -20,7 +20,7 @@ Sends a slack message announcing the completion of a workflow run with build det
 
     # JSON array of { "title": "my title", "status": "my status" } objects to provide statuses of individual steps or jobs
     # optional, default "[]"
-    steps: |
+    indicators: |
       [
         { "title": "`terraform-plan` on dev-general", "status": "${{ needs.terraform-plan-dev-general.result }}" },
         { "title": "`terraform-apply` on dev-general", "status": "${{ needs.terraform-apply-dev-general.result }}" },

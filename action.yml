@@ -12,7 +12,7 @@ inputs:
     required: true
     description: Status to be included in the message, from ${{ job.status }} ("success", "failure", or "cancelled")
 
-  steps:
+  indicators:
     required: false
     description: "JSON array of { \"title\": \"my title\", \"status\": \"my status\" } objects to provide statuses of individual steps or jobs"
     default: "[]"

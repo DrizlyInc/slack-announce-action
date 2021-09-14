@@ -62,15 +62,15 @@ func Test_NewCommitContextBlock(t *testing.T) {
 	assertEquals(t, expected, string(blockJson))
 }
 
-func Test_NewStepsSectionBlock(t *testing.T) {
+func Test_NewIndicatorsSectionBlock(t *testing.T) {
 	inputs := ActionInputs{
-		steps: []Step{
+		indicators: []Indicator{
 			{Title: "Foo", Status: "success"},
 			{Title: "Bar", Status: "failure"},
 		},
 	}
 
-	block := NewStepsSectionBlock(inputs)
+	block := NewIndicatorsSectionBlock(inputs)
 	blockJson, _ := json.Marshal(block)
 
 	expected := `{"type":"section","text":{"type":"mrkdwn","text":":white_check_mark: Foo\n:x: Bar\n"}}`

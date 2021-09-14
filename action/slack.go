@@ -82,12 +82,12 @@ func NewCommitContextBlock(env Environment) *slack.ContextBlock {
 	)
 }
 
-// Creates a section block containing a list of step titles with
+// Creates a section block containing a list of indicator titles with
 // emoji representation of their statuses
-func NewStepsSectionBlock(inputs ActionInputs) *slack.SectionBlock {
+func NewIndicatorsSectionBlock(inputs ActionInputs) *slack.SectionBlock {
 
 	text := ""
-	for _, step := range inputs.steps {
+	for _, step := range inputs.indicators {
 		text = text + fmt.Sprintf("%s %s\n", GetStatusEmoji(step.Status), step.Title)
 	}
 

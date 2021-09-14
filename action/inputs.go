@@ -12,10 +12,10 @@ type ActionInputs struct {
 	channel    string
 	username   string
 	status     string
-	steps      []Step
+	indicators []Indicator
 }
 
-type Step struct {
+type Indicator struct {
 	Title  string `json:"title"`
 	Status string `json:"status"`
 }
@@ -25,30 +25,30 @@ func ParseInputs() *ActionInputs {
 	status := EnvOrFatal("INPUT_STATUS", "Input 'status' is required")
 	channel := EnvOrFatal("INPUT_CHANNEL", "Input 'channel' is required")
 	username := EnvOrDefault("INPUT_USERNAME", "GitHub Actions")
-	steps := ParseStepsInput()
+	indicators := ParseIndicatorsInput()
 
 	return &ActionInputs{
 		webhookUrl: webhookUrl,
 		status:     status,
 		channel:    channel,
 		username:   username,
-		steps:      steps,
+		indicators: indicators,
 	}
 }
 
-func ParseStepsInput() []Step {
-	stepsJson := EnvOrDefault("INPUT_STEPS", "[]")
-	var steps []Step
-	err := json.Unmarshal([]byte(stepsJson), &steps)
+func ParseIndicatorsInput() []Indicator {
+	indicatorsJson := EnvOrDefault("INPUT_INDICATORS", "[]")
+	var indicators []Indicator
+	err := json.Unmarshal([]byte(indicatorsJson), &indicators)
 	if err != nil {
-		githubactions.Fatalf("Error parsing input 'steps': %v", err.Error())
+		githubactions.Fatalf("Error parsing input 'indicators': %v", err.Error())
 	}
-	for _, step := range steps {
-		if step.Status == "" || step.Title == "" {
-			githubactions.Fatalf("Missing property in provided step")
+	for _, indicator := range indicators {
+		if indicator.Status == "" || indicator.Title == "" {
+			githubactions.Fatalf("Missing property in provided indicator")
 		}
 	}
-	return steps
+	return indicators
 }
 
 func EnvOrDefault(name, def string) string {
