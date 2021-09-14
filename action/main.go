@@ -63,6 +63,8 @@ func GetColorAndTitleSuffix(status string) (string, string) {
 		return "#f44336", "failed!"
 	case "cancelled":
 		return "#808080", "was cancelled."
+	case "skipped":
+		return "#808080", "was skipped."
 	default:
 		githubactions.Fatalf("Provided status %s is invalid", status)
 		return "", ""
@@ -77,6 +79,8 @@ func GetStatusEmoji(status string) string {
 	case "failure":
 		return ":x:"
 	case "cancelled":
+		return ":grey_exclamation:"
+	case "skipped":
 		return ":heavy_minus_sign:"
 	default:
 		githubactions.Fatalf("Provided status %s is invalid", status)
