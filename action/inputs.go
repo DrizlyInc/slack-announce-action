@@ -10,15 +10,18 @@ type ActionInputs struct {
 	webhookUrl string
 	channel string
 	username string
+	status string
 }
 
 func ParseInputs() *ActionInputs {
 	webhookUrl := EnvOrFatal("INPUT_WEBHOOK_URL", "Input 'webhook_url' is required")
+	status := EnvOrFatal("INPUT_STATUS", "Input 'status' is required")
 	channel := EnvOrDefault("INPUT_CHANNEL", "webhook-playground")
 	username := EnvOrDefault("INPUT_USERNAME", "GitHub Actions")
 
 	return &ActionInputs{
 		webhookUrl: webhookUrl,
+		status: status,
 		channel: channel,
 		username: username,
 	}

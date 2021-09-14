@@ -8,6 +8,10 @@ inputs:
     required: true
     description: Slack webhook url to use for sending the notification
 
+  status:
+    required: true
+    description: Status to be included in the message, from ${{ job.status }} ("success", "failure", or "cancelled")
+
   channel:
     required: false
     description: Slack channel to send the announcement to

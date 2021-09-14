@@ -16,4 +16,6 @@ services:
       GITHUB_SHA: 28e8b353eabda5998a2e1203aed33c5999944779
 
       INPUT_WEBHOOK_URL: https://hooks.slack.com/services/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
+      INPUT_STATUS: success
       INPUT_CHANNEL:
+      INPUT_USERNAME: Testing
