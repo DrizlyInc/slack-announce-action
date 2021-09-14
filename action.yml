@@ -10,7 +10,7 @@ inputs:
 
   status:
     required: true
-    description: Status to be included in the message, from ${{ job.status }} ("success", "failure", or "cancelled")
+    description: Status to be included in the message, from job.status ("success", "failure", or "cancelled")
 
   indicators:
     required: false
