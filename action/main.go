@@ -24,7 +24,7 @@ func main() {
 			Fallback: title,
 			Color:    color,
 			Blocks: slack.Blocks{
-				BlockSet: GetMessageBlocks(*env, *inputs),
+				BlockSet: GetMessageBlocks(*env, *inputs, titleSuffix),
 			},
 		}},
 	}
@@ -40,9 +40,9 @@ func main() {
 }
 
 // https://app.slack.com/block-kit-builder
-func GetMessageBlocks(env Environment, inputs ActionInputs) []slack.Block {
+func GetMessageBlocks(env Environment, inputs ActionInputs, titleSuffix string) []slack.Block {
 	blocks := []slack.Block{
-		NewTitleBlock(env),
+		NewTitleBlock(env, titleSuffix),
 		NewActorContextBlock(env),
 		NewRefContextBlock(env),
 		NewCommitContextBlock(env),

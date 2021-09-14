@@ -8,7 +8,7 @@ import (
 
 // Creates a section block containing a summary of the build
 // status and a link to the repository
-func NewTitleBlock(env Environment) *slack.SectionBlock {
+func NewTitleBlock(env Environment, titleSuffix string) *slack.SectionBlock {
 	repositoryUrl := fmt.Sprintf("%s/%s", env.githubServerUrl, env.githubRepository)
 	formattedRepoLink := FormatLink(repositoryUrl, env.githubRepositoryName)
 
@@ -16,7 +16,7 @@ func NewTitleBlock(env Environment) *slack.SectionBlock {
 		Type: "section",
 		Text: &slack.TextBlockObject{
 			Type: slack.MarkdownType,
-			Text: fmt.Sprintf("*%s* build completed successfully!", formattedRepoLink),
+			Text: fmt.Sprintf("*%s* build %s", formattedRepoLink, titleSuffix),
 		},
 		Accessory: NewViewBuildAccessory(&env),
 	}
