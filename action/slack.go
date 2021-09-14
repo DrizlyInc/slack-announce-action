@@ -43,9 +43,9 @@ func NewActorContextBlock(env Environment) *slack.ContextBlock {
 		"actor",
 		NewContextTitle("Actor"),
 		&slack.ImageBlockElement{
-			Type: "image",
+			Type:     "image",
 			ImageURL: fmt.Sprintf("%s.png?size=32", authorUrl),
-			AltText: env.githubActor,
+			AltText:  env.githubActor,
 		},
 		&slack.TextBlockObject{
 			Type: slack.MarkdownType,

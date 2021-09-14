@@ -19,17 +19,17 @@ func main() {
 
 	webhookMsg := &slack.WebhookMessage{
 		Username: inputs.username,
-		Channel: inputs.channel,
+		Channel:  inputs.channel,
 		Attachments: []slack.Attachment{{
 			Fallback: title,
-			Color: color,
+			Color:    color,
 			Blocks: slack.Blocks{
 				BlockSet: GetMessageBlocks(*env, *inputs),
 			},
 		}},
 	}
 
-	b, err := json.Marshal(webhookMsg);
+	b, err := json.Marshal(webhookMsg)
 	githubactions.Infof(fmt.Sprintf("%s\n", string(b)))
 
 	err = slack.PostWebhook(inputs.webhookUrl, webhookMsg)

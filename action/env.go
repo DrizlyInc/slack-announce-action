@@ -7,15 +7,15 @@ import (
 )
 
 type Environment struct {
-	githubRunNumber string
-	githubRepository string
-	githubRepositoryName string
+	githubRunNumber       string
+	githubRepository      string
+	githubRepositoryName  string
 	githubRepositoryOwner string
-	githubServerUrl string
-	githubRef string
-	githubEventName string
-	githubActor string
-	githubSha string
+	githubServerUrl       string
+	githubRef             string
+	githubEventName       string
+	githubActor           string
+	githubSha             string
 }
 
 func ParseEnv() *Environment {
@@ -34,14 +34,14 @@ func ParseEnv() *Environment {
 	}
 
 	return &Environment{
-		githubRunNumber: githubRunNumber,
-		githubRepository: githubRepository,
-		githubRepositoryName: githubRepositorySplit[1],
+		githubRunNumber:       githubRunNumber,
+		githubRepository:      githubRepository,
+		githubRepositoryName:  githubRepositorySplit[1],
 		githubRepositoryOwner: githubRepositorySplit[0],
-		githubServerUrl: githubServerUrl,
-		githubRef: githubRef,
-		githubEventName: githubEventName,
-		githubActor: githubActor,
-		githubSha: githubSha,
+		githubServerUrl:       githubServerUrl,
+		githubRef:             githubRef,
+		githubEventName:       githubEventName,
+		githubActor:           githubActor,
+		githubSha:             githubSha,
 	}
 }

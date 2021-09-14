@@ -9,14 +9,14 @@ import (
 
 type ActionInputs struct {
 	webhookUrl string
-	channel string
-	username string
-	status string
-	steps []Step
+	channel    string
+	username   string
+	status     string
+	steps      []Step
 }
 
 type Step struct {
-	Title string `json:"title"`
+	Title  string `json:"title"`
 	Status string `json:"status"`
 }
 
@@ -29,10 +29,10 @@ func ParseInputs() *ActionInputs {
 
 	return &ActionInputs{
 		webhookUrl: webhookUrl,
-		status: status,
-		channel: channel,
-		username: username,
-		steps: steps,
+		status:     status,
+		channel:    channel,
+		username:   username,
+		steps:      steps,
 	}
 }
 
