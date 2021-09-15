@@ -14,12 +14,18 @@ inputs:
 
   indicators:
     required: false
-    description: "JSON array of { \"name\": \"my name\", \"status\": \"my status\" } objects to provide statuses of individual steps or jobs"
+    description: |
+      JSON array of { "name": "my name", "status": "my status" } objects to report on.
+      If any indicators have a status of 'failed' or 'cancelled', the overall announcement
+      status will be 'failed' or 'cancelled' respectively. Statuses must be one of
+      "success", "failure", "skipped", or "cancelled".
     default: "[]"
 
   status_override:
     required: false
-    description: Allows the user to manually override the cumulative status reported instead of interpreting it from 'indicators', one of "success", "failure", "cancelled", or "skipped"
+    description: |
+      Can be used to override the status derived from the individual indicator statuses for
+      the overall announcement. Statuses must be one of "success", "failure", "skipped", or "cancelled".
 
   username:
     required: false

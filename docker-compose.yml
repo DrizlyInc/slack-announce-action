@@ -16,12 +16,12 @@ services:
       GITHUB_SHA: 28e8b353eabda5998a2e1203aed33c5999944779
 
       INPUT_WEBHOOK_URL:
-      INPUT_STATUS: success
       INPUT_CHANNEL: webhook-playground
+      # INPUT_STATUS_OVERRIDE: success
       INPUT_USERNAME: Testing
-      INPUT_STEPS: |
+      INPUT_INDICATORS: |
         [
-          { "title": "`terraform-plan` on dev-general", "status": "success" },
-          { "title": "`terraform-apply` on dev-general", "status": "success" },
-          { "title": "`terraform-plan` on old-prod", "status": "failure" }
+          { "name": "`terraform-plan` on dev-general", "status": "success" },
+          { "name": "`terraform-apply` on dev-general", "status": "success" },
+          { "name": "`terraform-plan` on old-prod", "status": "failure" }
         ]

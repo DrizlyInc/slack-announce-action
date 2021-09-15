@@ -24,9 +24,9 @@ type Indicator struct {
 }
 
 const (
-	Success = "success"
-	Failure = "failure"
-	Skipped = "skipped"
+	Success   = "success"
+	Failure   = "failure"
+	Skipped   = "skipped"
 	Cancelled = "cancelled"
 )
 
@@ -47,7 +47,7 @@ func ParseInputs() *ActionInputs {
 		indicators:     indicators,
 		statusOverride: statusOverride,
 		username:       username,
-		status: GetCummulativeStatus(statusOverride, indicators),
+		status:         GetCummulativeStatus(statusOverride, indicators),
 	}
 }
 

@@ -4,36 +4,54 @@ Sends a slack message announcing the completion of a workflow run with build det
 
 ![Screenshot](/msg-screenshot.png)
 
-# Usage
+## Inputs
+
+| Input Name  | Required | Default | Description |
+| ----------- | ----------- | ---------- | ---------- |
+| `webhook_url` | YES       | N/A | Slack webhook url to use for sending the announcement |
+| `channel` | YES | N/A | Slack channel to send the announcement to |
+| `indicators` | no | "[]" | JSON array of `{ "name": "my name", "status": "my status" }` objects to report on. If any indicators have a status of `failed` or `cancelled`, the overall announcement status will be `failed` or `cancelled` respectively. Statuses must be one of `success`, `failure`, `skipped`, or `cancelled`. |
+| `status_override` | no | N/A | Can be used to override the status derived from the individual indicator statuses for the overall announcement. Statuses must be one of `success`, `failure`, `skipped`, or `cancelled`. |
+| `username` | no | "GitHub Actions" | Username to display as the sender of the announcement |
+
+## Usage
+
+In the example below, the announcement will report the build as failed due to the failure of the `say-goodbye` job (see screenshot above).
 
 ```yaml
-- uses: DrizlyInc/slack-announce-action@v0.1.0
-  with:
+jobs:
 
-    # Slack webhook url to use for sending the notification
-    # required
-    webhook_url: ${{ secrets.GHA_SLACK_WEBHOOK_URL }}
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "Hello, ${NAME}!"
 
-    # Status to be included in the message, from ${{ job.status }} ("success", "failure", or "cancelled")
-    # required
-    status: ${{ job.status }}
+  say-goodbye:
+    needs: [say-hello]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Goodbye
+        run: |
+          echo "Goodbye, ${NAME}!"
+          exit 1
 
-    # JSON array of { "title": "my title", "status": "my status" } objects to provide statuses of individual steps or jobs
-    # optional, default "[]"
-    indicators: |
-      [
-        { "title": "`terraform-plan` on dev-general", "status": "${{ needs.terraform-plan-dev-general.result }}" },
-        { "title": "`terraform-apply` on dev-general", "status": "${{ needs.terraform-apply-dev-general.result }}" },
-        { "title": "`terraform-plan` on old-prod", "status": "${{ needs.terraform-plan-old-prod.result }}" },
-      ]
-
-    # Slack channel to send the announcement to
-    # required
-    channel: dev-releases
-
-    # Username to display as the sender of the notification
-    # optional, default "GitHub Actions"
-    username: GitHub Actions
+  slack-announce:
+    needs:
+      - say-hello
+      - say-goodbye
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: DrizlyInc/slack-announce-action@v0.1.0
+        with:
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          channel: webhook-playground
+          indicators: |
+            [
+              { "name": "`say-hello`", "status": "${{ needs.say-hello.result }}" },
+              { "name": "`say-goodbye`", "status": "${{ needs.say-goodbye.result }}" }
+            ]
 ```
 
 # Releasing
