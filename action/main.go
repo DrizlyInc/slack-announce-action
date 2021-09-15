@@ -41,7 +41,7 @@ func main() {
 // https://app.slack.com/block-kit-builder
 func GetMessageBlocks(env Environment, inputs ActionInputs, titleSuffix string) []slack.Block {
 	blocks := []slack.Block{
-		NewTitleBlock(env, titleSuffix),
+		NewTitleBlock(env, inputs.titleEntity, titleSuffix),
 		NewActorContextBlock(env),
 		NewRefContextBlock(env),
 		NewCommitContextBlock(env),
