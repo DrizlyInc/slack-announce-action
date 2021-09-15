@@ -32,6 +32,11 @@ inputs:
     description: Username to display as the sender of the notification
     default: GitHub Actions
 
+  title_entity:
+    required: false
+    description: The entity being reported on to be used in the announcement title, ex. "my-repo <title_entity> completed successfully!" (supports markdown)
+    default: workflow
+
 runs:
   using: docker
   image: Dockerfile

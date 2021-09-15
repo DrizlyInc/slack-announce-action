@@ -14,6 +14,7 @@ type ActionInputs struct {
 	// Optional
 	statusOverride string
 	username       string
+	titleEntity    string
 	// Derived
 	status string
 }
@@ -36,6 +37,7 @@ func ParseInputs() *ActionInputs {
 	indicators := ParseIndicatorsInput()
 	statusOverride := EnvOrDefault("INPUT_STATUS_OVERRIDE", "")
 	username := EnvOrDefault("INPUT_USERNAME", "GitHub Actions")
+	titleEntity := EnvOrDefault("INPUT_TITLE_ENTITY", "workflow")
 
 	if len(indicators) == 0 && statusOverride == "" {
 		githubactions.Fatalf("Input 'status_override' is required if no 'indicators' are provided")
@@ -47,6 +49,7 @@ func ParseInputs() *ActionInputs {
 		indicators:     indicators,
 		statusOverride: statusOverride,
 		username:       username,
+		titleEntity:    titleEntity,
 		status:         GetCummulativeStatus(statusOverride, indicators),
 	}
 }
