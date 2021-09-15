@@ -48,6 +48,7 @@ jobs:
         with:
           webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
           channel: webhook-playground
+          title_entity: build
           indicators: |
             [
               { "name": "`say-hello`", "status": "${{ needs.say-hello.result }}" },
