@@ -65,8 +65,8 @@ func Test_NewCommitContextBlock(t *testing.T) {
 func Test_NewIndicatorsSectionBlock(t *testing.T) {
 	inputs := ActionInputs{
 		indicators: []Indicator{
-			{Title: "Foo", Status: "success"},
-			{Title: "Bar", Status: "failure"},
+			{Name: "Foo", Status: "success"},
+			{Name: "Bar", Status: "failure"},
 		},
 	}
 

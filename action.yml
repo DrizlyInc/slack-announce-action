@@ -8,18 +8,18 @@ inputs:
     required: true
     description: Slack webhook url to use for sending the notification
 
-  status:
-    required: true
-    description: Status to be included in the message, from job.status ("success", "failure", or "cancelled")
-
-  indicators:
-    required: false
-    description: "JSON array of { \"title\": \"my title\", \"status\": \"my status\" } objects to provide statuses of individual steps or jobs"
-    default: "[]"
-
   channel:
     required: true
     description: Slack channel to send the announcement to
+
+  indicators:
+    required: false
+    description: "JSON array of { \"name\": \"my name\", \"status\": \"my status\" } objects to provide statuses of individual steps or jobs"
+    default: "[]"
+
+  status_override:
+    required: false
+    description: Allows the user to manually override the cumulative status reported instead of interpreting it from 'indicators', one of "success", "failure", "cancelled", or "skipped"
 
   username:
     required: false

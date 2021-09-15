@@ -87,8 +87,8 @@ func NewCommitContextBlock(env Environment) *slack.ContextBlock {
 func NewIndicatorsSectionBlock(inputs ActionInputs) *slack.SectionBlock {
 
 	text := ""
-	for _, step := range inputs.indicators {
-		text = text + fmt.Sprintf("%s %s\n", GetStatusEmoji(step.Status), step.Title)
+	for _, indicator := range inputs.indicators {
+		text = text + fmt.Sprintf("%s %s\n", GetEmojiForStatus(indicator.Status), indicator.Name)
 	}
 
 	return slack.NewSectionBlock(

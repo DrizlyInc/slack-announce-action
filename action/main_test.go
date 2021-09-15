@@ -4,34 +4,44 @@ import (
 	"testing"
 )
 
-func Test_GetColorAndTitleSuffix(t *testing.T) {
-	color, suffix := GetColorAndTitleSuffix("success")
+func Test_GetColorForStatus(t *testing.T) {
+	color := GetColorForStatus("success")
 	assertEquals(t, "#4caf50", color)
+
+	color = GetColorForStatus("failure")
+	assertEquals(t, "#f44336", color)
+
+	color = GetColorForStatus("cancelled")
+	assertEquals(t, "#808080", color)
+
+	color = GetColorForStatus("skipped")
+	assertEquals(t, "#808080", color)
+}
+
+func Test_GetTitleSuffixForStatus(t *testing.T) {
+	suffix := GetTitleSuffixForStatus("success")
 	assertEquals(t, "completed successfully!", suffix)
 
-	color, suffix = GetColorAndTitleSuffix("failure")
-	assertEquals(t, "#f44336", color)
+	suffix = GetTitleSuffixForStatus("failure")
 	assertEquals(t, "failed!", suffix)
 
-	color, suffix = GetColorAndTitleSuffix("cancelled")
-	assertEquals(t, "#808080", color)
+	suffix = GetTitleSuffixForStatus("cancelled")
 	assertEquals(t, "was cancelled.", suffix)
 
-	color, suffix = GetColorAndTitleSuffix("skipped")
-	assertEquals(t, "#808080", color)
+	suffix = GetTitleSuffixForStatus("skipped")
 	assertEquals(t, "was skipped.", suffix)
 }
 
-func Test_GetStatusEmoji(t *testing.T) {
-	emoji := GetStatusEmoji("success")
+func Test_GetEmojiForStatus(t *testing.T) {
+	emoji := GetEmojiForStatus("success")
 	assertEquals(t, ":white_check_mark:", emoji)
 
-	emoji = GetStatusEmoji("failure")
+	emoji = GetEmojiForStatus("failure")
 	assertEquals(t, ":x:", emoji)
 
-	emoji = GetStatusEmoji("cancelled")
+	emoji = GetEmojiForStatus("cancelled")
 	assertEquals(t, ":grey_exclamation:", emoji)
 
-	emoji = GetStatusEmoji("skipped")
+	emoji = GetEmojiForStatus("skipped")
 	assertEquals(t, ":heavy_minus_sign:", emoji)
 }

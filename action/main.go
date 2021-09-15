@@ -12,8 +12,7 @@ func main() {
 
 	env := ParseEnv()
 	inputs := ParseInputs()
-
-	color, titleSuffix := GetColorAndTitleSuffix(inputs.status)
+	titleSuffix := GetTitleSuffixForStatus(inputs.status)
 
 	title := fmt.Sprintf("%s build %s", env.githubRepositoryName, titleSuffix)
 
@@ -22,7 +21,7 @@ func main() {
 		Channel:  inputs.channel,
 		Attachments: []slack.Attachment{{
 			Fallback: title,
-			Color:    color,
+			Color:    GetColorForStatus(inputs.status),
 			Blocks: slack.Blocks{
 				BlockSet: GetMessageBlocks(*env, *inputs, titleSuffix),
 			},
@@ -53,37 +52,53 @@ func GetMessageBlocks(env Environment, inputs ActionInputs, titleSuffix string) 
 	return blocks
 }
 
-// Returns a color for the message attachment and an
-// ending for the title based on the status being reported
-func GetColorAndTitleSuffix(status string) (string, string) {
+// Returns a color representing the given status
+func GetColorForStatus(status string) string {
 	switch status {
-	case "success":
-		return "#4caf50", "completed successfully!"
-	case "failure":
-		return "#f44336", "failed!"
-	case "cancelled":
-		return "#808080", "was cancelled."
-	case "skipped":
-		return "#808080", "was skipped."
+	case Success:
+		return "#4caf50"
+	case Failure:
+		return "#f44336"
+	case Cancelled:
+		return "#808080"
+	case Skipped:
+		return "#808080"
 	default:
-		githubactions.Fatalf("Provided status %s is invalid", status)
-		return "", ""
+		githubactions.Fatalf("Provided status '%s' is invalid", status)
+		return ""
+	}
+}
+
+// Returns the end of a sentence announcing the given status
+func GetTitleSuffixForStatus(status string) string {
+	switch status {
+	case Success:
+		return "completed successfully!"
+	case Failure:
+		return "failed!"
+	case Cancelled:
+		return "was cancelled."
+	case Skipped:
+		return "was skipped."
+	default:
+		githubactions.Fatalf("Provided status '%s' is invalid", status)
+		return ""
 	}
 }
 
 // Returns an emoji which represents a given status
-func GetStatusEmoji(status string) string {
+func GetEmojiForStatus(status string) string {
 	switch status {
-	case "success":
+	case Success:
 		return ":white_check_mark:"
-	case "failure":
+	case Failure:
 		return ":x:"
-	case "cancelled":
+	case Cancelled:
 		return ":grey_exclamation:"
-	case "skipped":
+	case Skipped:
 		return ":heavy_minus_sign:"
 	default:
-		githubactions.Fatalf("Provided status %s is invalid", status)
+		githubactions.Fatalf("Provided status '%s' is invalid", status)
 		return ""
 	}
 }
