@@ -14,7 +14,7 @@ func main() {
 	inputs := ParseInputs()
 	titleSuffix := GetTitleSuffixForStatus(inputs.status)
 
-	title := fmt.Sprintf("%s %s %s", env.githubRepositoryName, inputs.titleEntity, titleSuffix)
+	title := fmt.Sprintf("%s %s %s", env.GithubRepositoryName, inputs.titleEntity, titleSuffix)
 
 	webhookMsg := &slack.WebhookMessage{
 		Username: inputs.username,

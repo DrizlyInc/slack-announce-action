@@ -3,45 +3,35 @@ package main
 import (
 	"strings"
 
+	"github.com/caarlos0/env/v6"
 	"github.com/sethvargo/go-githubactions"
 )
 
 type Environment struct {
-	githubRunNumber       string
-	githubRepository      string
-	githubRepositoryName  string
-	githubRepositoryOwner string
-	githubServerUrl       string
-	githubRef             string
-	githubEventName       string
-	githubActor           string
-	githubSha             string
+	GithubRunNumber       int    `env:"GITHUB_RUN_NUMBER,notEmpty"`
+	GithubRepository      string `env:"GITHUB_REPOSITORY,notEmpty"`
+	GithubRepositoryName  string
+	GithubRepositoryOwner string
+	GithubServerUrl       string `env:"GITHUB_SERVER_URL,notEmpty"`
+	GithubRef             string `env:"GITHUB_REF,notEmpty"`
+	GithubEventName       string `env:"GITHUB_EVENT_NAME,notEmpty"`
+	GithubActor           string `env:"GITHUB_ACTOR,notEmpty"`
+	GithubSha             string `env:"GITHUB_SHA,notEmpty"`
 }
 
 func ParseEnv() *Environment {
 
-	githubRunNumber := EnvOrFatal("GITHUB_RUN_NUMBER", "Failed to read GITHUB_RUN_NUMBER from environment")
-	githubServerUrl := EnvOrFatal("GITHUB_SERVER_URL", "Failed to read GITHUB_SERVER_URL from environment")
-	githubRef := EnvOrFatal("GITHUB_REF", "Failed to read GITHUB_REF from environment")
-	githubEventName := EnvOrFatal("GITHUB_EVENT_NAME", "Failed to read GITHUB_EVENT_NAME from environment")
-	githubActor := EnvOrFatal("GITHUB_ACTOR", "Failed to read GITHUB_ACTOR from environment")
-	githubSha := EnvOrFatal("GITHUB_SHA", "Failed to read GITHUB_SHA from environment")
+	cfg := Environment{}
+	if err := env.Parse(&cfg); err != nil {
+		githubactions.Fatalf(err.Error())
+	}
 
-	githubRepository := EnvOrFatal("GITHUB_REPOSITORY", "Failed to read GITHUB_REPOSITORY from environment")
-	githubRepositorySplit := strings.Split(githubRepository, "/")
+	githubRepositorySplit := strings.Split(cfg.GithubRepository, "/")
 	if len(githubRepositorySplit) != 2 {
 		githubactions.Fatalf("GITHUB_REPOSITORY env var was not formatted as <owner>/<name>")
 	}
+	cfg.GithubRepositoryOwner = githubRepositorySplit[0]
+	cfg.GithubRepositoryName = githubRepositorySplit[1]
 
-	return &Environment{
-		githubRunNumber:       githubRunNumber,
-		githubRepository:      githubRepository,
-		githubRepositoryName:  githubRepositorySplit[1],
-		githubRepositoryOwner: githubRepositorySplit[0],
-		githubServerUrl:       githubServerUrl,
-		githubRef:             githubRef,
-		githubEventName:       githubEventName,
-		githubActor:           githubActor,
-		githubSha:             githubSha,
-	}
+	return &cfg
 }

@@ -7,9 +7,9 @@ import (
 
 func Test_NewViewBuildAccessory(t *testing.T) {
 	env := Environment{
-		githubServerUrl:  "https://github.com",
-		githubRepository: "DrizlyInc/slack-announce-action",
-		githubRunNumber:  "784",
+		GithubServerUrl:  "https://github.com",
+		GithubRepository: "DrizlyInc/slack-announce-action",
+		GithubRunNumber:  784,
 	}
 
 	accessory := NewViewBuildAccessory(&env)
@@ -22,8 +22,8 @@ func Test_NewViewBuildAccessory(t *testing.T) {
 
 func Test_NewActorContextBlock(t *testing.T) {
 	env := Environment{
-		githubServerUrl: "https://github.com",
-		githubActor:     "benreynolds-drizly",
+		GithubServerUrl: "https://github.com",
+		GithubActor:     "benreynolds-drizly",
 	}
 
 	block := NewActorContextBlock(env)
@@ -36,7 +36,7 @@ func Test_NewActorContextBlock(t *testing.T) {
 
 func Test_NewRefContextBlock(t *testing.T) {
 	env := Environment{
-		githubRef: "refs/heads/main",
+		GithubRef: "refs/heads/main",
 	}
 
 	block := NewRefContextBlock(env)
@@ -49,9 +49,9 @@ func Test_NewRefContextBlock(t *testing.T) {
 
 func Test_NewCommitContextBlock(t *testing.T) {
 	env := Environment{
-		githubServerUrl:  "https://github.com",
-		githubRepository: "DrizlyInc/slack-announce-action",
-		githubSha:        "ecfee3de6b694111add2576049ad73b18417b9ad",
+		GithubServerUrl:  "https://github.com",
+		GithubRepository: "DrizlyInc/slack-announce-action",
+		GithubSha:        "ecfee3de6b694111add2576049ad73b18417b9ad",
 	}
 
 	block := NewCommitContextBlock(env)

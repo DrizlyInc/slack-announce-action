@@ -9,8 +9,8 @@ import (
 // Creates a section block containing a summary of the build
 // status and a link to the repository
 func NewTitleBlock(env Environment, titleEntity, titleSuffix string) *slack.SectionBlock {
-	repositoryUrl := fmt.Sprintf("%s/%s", env.githubServerUrl, env.githubRepository)
-	formattedRepoLink := FormatLink(repositoryUrl, env.githubRepositoryName)
+	repositoryUrl := fmt.Sprintf("%s/%s", env.GithubServerUrl, env.GithubRepository)
+	formattedRepoLink := FormatLink(repositoryUrl, env.GithubRepositoryName)
 
 	return &slack.SectionBlock{
 		Type: "section",
@@ -30,14 +30,14 @@ func NewViewBuildAccessory(env *Environment) *slack.Accessory {
 		"",
 		slack.NewTextBlockObject("plain_text", "View Build", false, false),
 	)
-	viewBuildButton.URL = fmt.Sprintf("%s/%s/actions/runs/%s", env.githubServerUrl, env.githubRepository, env.githubRunNumber)
+	viewBuildButton.URL = fmt.Sprintf("%s/%s/actions/runs/%d", env.GithubServerUrl, env.GithubRepository, env.GithubRunNumber)
 	return slack.NewAccessory(viewBuildButton)
 }
 
 // Creates a context block containing the profile photo
 // and name of the github actor (as a link)
 func NewActorContextBlock(env Environment) *slack.ContextBlock {
-	authorUrl := fmt.Sprintf("%s/%s", env.githubServerUrl, env.githubActor)
+	authorUrl := fmt.Sprintf("%s/%s", env.GithubServerUrl, env.GithubActor)
 
 	return slack.NewContextBlock(
 		"actor",
@@ -45,11 +45,11 @@ func NewActorContextBlock(env Environment) *slack.ContextBlock {
 		&slack.ImageBlockElement{
 			Type:     "image",
 			ImageURL: fmt.Sprintf("%s.png?size=32", authorUrl),
-			AltText:  env.githubActor,
+			AltText:  env.GithubActor,
 		},
 		&slack.TextBlockObject{
 			Type: slack.MarkdownType,
-			Text: FormatLink(authorUrl, env.githubActor),
+			Text: FormatLink(authorUrl, env.GithubActor),
 		},
 	)
 }
@@ -62,7 +62,7 @@ func NewRefContextBlock(env Environment) *slack.ContextBlock {
 		NewContextTitle("Ref"),
 		&slack.TextBlockObject{
 			Type: slack.MarkdownType,
-			Text: fmt.Sprintf("`%s`", env.githubRef),
+			Text: fmt.Sprintf("`%s`", env.GithubRef),
 		},
 	)
 }
@@ -70,14 +70,14 @@ func NewRefContextBlock(env Environment) *slack.ContextBlock {
 // Creates a context block containing a link to the commit
 // which triggered this action
 func NewCommitContextBlock(env Environment) *slack.ContextBlock {
-	commitUrl := fmt.Sprintf("%s/%s/commit/%s", env.githubServerUrl, env.githubRepository, env.githubSha)
+	commitUrl := fmt.Sprintf("%s/%s/commit/%s", env.GithubServerUrl, env.GithubRepository, env.GithubSha)
 
 	return slack.NewContextBlock(
 		"commit",
 		NewContextTitle("Commit"),
 		&slack.TextBlockObject{
 			Type: slack.MarkdownType,
-			Text: FormatLink(commitUrl, env.githubSha[0:6]),
+			Text: FormatLink(commitUrl, env.GithubSha[0:6]),
 		},
 	)
 }
