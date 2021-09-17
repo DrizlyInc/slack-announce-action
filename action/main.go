@@ -8,6 +8,12 @@ import (
 	"github.com/slack-go/slack"
 )
 
+const (
+	Green = "#4caf50"
+	Red   = "#f44336"
+	Gray  = "#808080"
+)
+
 func main() {
 
 	env := ParseEnv()
@@ -56,13 +62,13 @@ func GetMessageBlocks(env Environment, inputs ActionInputs, titleSuffix string) 
 func GetColorForStatus(status string) string {
 	switch status {
 	case Success:
-		return "#4caf50"
+		return Green
 	case Failure:
-		return "#f44336"
+		return Red
 	case Cancelled:
-		return "#808080"
+		return Gray
 	case Skipped:
-		return "#808080"
+		return Gray
 	default:
 		githubactions.Fatalf("Provided status '%s' is invalid", status)
 		return ""
