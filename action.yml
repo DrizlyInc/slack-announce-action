@@ -1,0 +1,42 @@
+name: Slack Announce
+description: Announces the status of a GitHub actions workflow
+author: DrizlyInc/DVX
+
+inputs:
+
+  webhook_url:
+    required: true
+    description: Slack webhook url to use for sending the notification
+
+  channel:
+    required: true
+    description: Slack channel to send the announcement to
+
+  indicators:
+    required: false
+    description: |
+      JSON array of { "name": "my name", "status": "my status" } objects to report on.
+      If any indicators have a status of 'failed' or 'cancelled', the overall announcement
+      status will be 'failed' or 'cancelled' respectively. Statuses must be one of
+      "success", "failure", "skipped", or "cancelled".
+    default: "[]"
+
+  status_override:
+    required: false
+    description: |
+      Can be used to override the status derived from the individual indicator statuses for
+      the overall announcement. Statuses must be one of "success", "failure", "skipped", or "cancelled".
+
+  username:
+    required: false
+    description: Username to display as the sender of the notification
+    default: GitHub Actions
+
+  title_entity:
+    required: false
+    description: The entity being reported on to be used in the announcement title, ex. "my-repo <title_entity> completed successfully!" (supports markdown)
+    default: workflow
+
+runs:
+  using: docker
+  image: docker://ghcr.io/drizlyinc/slack-announce-action:v0.1.0
