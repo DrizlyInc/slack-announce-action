@@ -30,7 +30,7 @@ func NewViewBuildAccessory(env *Environment) *slack.Accessory {
 		"",
 		slack.NewTextBlockObject("plain_text", "View Build", false, false),
 	)
-	viewBuildButton.URL = fmt.Sprintf("%s/%s/actions/runs/%d", env.GithubServerUrl, env.GithubRepository, env.GithubRunNumber)
+	viewBuildButton.URL = fmt.Sprintf("%s/%s/actions/runs/%d", env.GithubServerUrl, env.GithubRepository, env.GithubRunId)
 	return slack.NewAccessory(viewBuildButton)
 }
 
