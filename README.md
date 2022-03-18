@@ -1,3 +1,5 @@
+> :warning: **THIS REPOSITORY IS NO LONGER MAINTAINED**
+
 # Slack Announce Action
 
 Sends a slack message announcing the completion of a workflow run with build details and links.
