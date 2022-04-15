@@ -9,7 +9,7 @@ func Test_NewViewBuildAccessory(t *testing.T) {
 	env := Environment{
 		GithubServerUrl:  "https://github.com",
 		GithubRepository: "DrizlyInc/slack-announce-action",
-		GithubRunId:      784,
+		GithubRunId:      2173363241,
 	}
 
 	accessory := NewViewBuildAccessory(&env)
