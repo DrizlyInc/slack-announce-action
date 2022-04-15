@@ -8,7 +8,7 @@ import (
 )
 
 type Environment struct {
-	GithubRunId           int    `env:"GITHUB_RUN_ID,notEmpty"`
+	GithubRunId           uint64 `env:"GITHUB_RUN_ID,notEmpty"`
 	GithubRepository      string `env:"GITHUB_REPOSITORY,notEmpty"`
 	GithubRepositoryName  string
 	GithubRepositoryOwner string

@@ -1,4 +1,4 @@
-> :warning: **THIS REPOSITORY IS NO LONGER MAINTAINED**
+> :warning: **THIS REPOSITORY IS NO LONGER MAINTAINED (mostly)**
 
 # Slack Announce Action
 
