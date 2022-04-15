@@ -15,7 +15,7 @@ func Test_NewViewBuildAccessory(t *testing.T) {
 	accessory := NewViewBuildAccessory(&env)
 	accessoryJson, _ := json.Marshal(accessory)
 
-	expected := `{"type":"button","text":{"type":"plain_text","text":"View Build"},"action_id":"view_build","url":"https://github.com/DrizlyInc/slack-announce-action/actions/runs/784"}`
+	expected := `{"type":"button","text":{"type":"plain_text","text":"View Build"},"action_id":"view_build","url":"https://github.com/DrizlyInc/slack-announce-action/actions/runs/2173363241"}`
 
 	assertEquals(t, expected, string(accessoryJson))
 }
